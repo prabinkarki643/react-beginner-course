@@ -1,9 +1,9 @@
-# Class 51: Capstone Part 2 — Polish & Vercel Deployment
+# Class 51: Capstone Part 2 — Polish & Firebase Deployment
 
 > **Time budget**: 1 hour (≈ 50 min build + deploy + 10 min closing)
 > **Prerequisites**: Class 50 (the dashboard must be running locally)
 
-This is the final class of the course. By the end of the hour you will have a polished application, a public GitHub repository and a live URL on Vercel that you can put on your CV. Let's finish strong.
+This is the final class of the course. By the end of the hour you will have a polished application, a public GitHub repository and a live URL on **Firebase Hosting** that you can put on your CV. Let's finish strong.
 
 ## What You Will Build
 - Replace the users list with a proper `<UsersTable>` (TanStack Table, URL-synced pagination + search)
@@ -11,7 +11,7 @@ This is the final class of the course. By the end of the hour you will have a po
 - Polish the create-post form (disabled-while-submitting, reset on success)
 - Build for production with `npm run build` and preview locally
 - Push the project to GitHub
-- Connect the repo to Vercel and deploy
+- Deploy the built app to Firebase Hosting on a free `.web.app` URL
 - Look at "what's next" in your developer journey
 
 ---
@@ -360,7 +360,7 @@ Test the production build locally before pushing to anything:
 npm run preview
 ```
 
-This serves `dist/` on `http://localhost:4173`. Walk through the app one more time. Sign in. Create a post. Switch theme. Open `/users` and search. If it works here, it will work on Vercel.
+This serves `dist/` on `http://localhost:4173`. Walk through the app one more time. Sign in. Create a post. Switch theme. Open `/users` and search. If it works here, it will work on Firebase.
 
 > **A real check before deploying:** in the production build, the React Query Devtools panel is gone, the bundle is tiny and the page paints in milliseconds. That is what your users will get.
 
@@ -368,95 +368,137 @@ This serves `dist/` on `http://localhost:4173`. Walk through the app one more ti
 
 ## 51.5 Push to GitHub (5 minutes)
 
-You did this in Class 27 — quick recap.
+You did this in Class 27 — quick recap using the **modern GitHub CLI flow** you learned that day.
 
 ```bash
 # In the dashboard/ folder
-git init
+git init -b main
 git add .
 git commit -m "Capstone: Users & Posts dashboard"
 
-# Create a new empty repo on github.com called "users-posts-dashboard"
-# (do NOT add a README, .gitignore or licence — your repo already has one)
-
-git branch -M main
-git remote add origin https://github.com/<your-username>/users-posts-dashboard.git
-git push -u origin main
+# Create the GitHub repo AND push, in one command
+gh repo create users-posts-dashboard --public --source . --remote origin --push
 ```
 
-> If you have not authenticated with GitHub before, the `git push` command will prompt you. The easiest route is the GitHub CLI (`gh auth login`) or a personal access token.
+> If `gh` is not installed on the machine you are using, fall back to the traditional flow from Class 27 §27.9 Path B (create an empty repo on github.com, then `git remote add origin …` and `git push -u origin main`).
 
-Check the repo loaded on github.com. Your code is now public.
+Check the repo loaded on [github.com](https://github.com) — your code is now public.
 
 ---
 
-## 51.6 Deploy to Vercel (10 minutes)
+## 51.6 Deploy to Firebase Hosting (10 minutes)
 
-[Vercel](https://vercel.com) is run by the team behind Next.js and is the default home for React apps. It is free for personal projects and integrates with GitHub in seconds.
+[Firebase Hosting](https://firebase.google.com/products/hosting) is Google's free static hosting service. It serves your built `dist/` folder from a global CDN, gives you free SSL (HTTPS), and lives at a friendly URL like `https://users-posts-dashboard.web.app`.
 
-### Step 1 — Sign in
+### Step 1 — Install the Firebase CLI
 
-Go to [vercel.com](https://vercel.com) and click **"Sign Up"** (or **"Log in"**) and choose **"Continue with GitHub"**. You did this in Class 1.
+Globally install the CLI once per machine:
 
-### Step 2 — Import the repository
+```bash
+npm install -g firebase-tools
+```
 
-1. On your Vercel dashboard click **"Add New…"** → **"Project"**.
-2. Find `users-posts-dashboard` in the list and click **Import**.
-3. If you don't see it, click **"Adjust GitHub App Permissions"** and grant Vercel access to that repo.
+Verify:
 
-### Step 3 — Confirm the build settings
+```bash
+firebase --version
+```
 
-Vercel auto-detects Vite. The defaults should be:
+You should see something like `13.x.x`.
 
-| Setting | Value |
-|---|---|
-| **Framework Preset** | Vite |
-| **Build Command** | `npm run build` |
-| **Output Directory** | `dist` |
-| **Install Command** | `npm install` |
-| **Node.js version** | 20.x (default) |
+### Step 2 — Sign in
 
-Leave them as-is.
+```bash
+firebase login
+```
 
-### Step 4 — Environment variables
+Your browser opens. Sign in with the **same Google account** you used to create your Firebase console account in Class 1. Once you see `Success! Logged in as you@gmail.com` in the terminal, you are done.
 
-Click **"Environment Variables"**. This capstone uses JSONPlaceholder, which is public, so **no variables are required**. But for future projects, remember:
+### Step 3 — Create a Firebase project (web console)
 
-- All Vite env vars must start with `VITE_` to be readable in the browser.
-- Example: `VITE_API_URL=https://my-backend.example.com`
-- Read in code with `import.meta.env.VITE_API_URL`.
-- Anything **without** the `VITE_` prefix stays server-side only.
+1. Go to **https://console.firebase.google.com**.
+2. Click **Add project** (or **Create a project**).
+3. Name it `users-posts-dashboard` (or anything you like — this becomes part of your free URL).
+4. Disable **Google Analytics** for now — we do not need it.
+5. Click **Create project** and wait for it to provision.
 
-### Step 5 — Deploy
+### Step 4 — Initialise Firebase Hosting in the project
 
-Click **"Deploy"**. Vercel will:
+From your `dashboard/` folder:
 
-1. Clone your repo.
-2. Run `npm install`.
-3. Run `npm run build`.
-4. Upload `dist/` to its global CDN.
-5. Give you a URL like `https://users-posts-dashboard.vercel.app`.
+```bash
+firebase init hosting
+```
 
-The whole thing takes about a minute. When the confetti animation appears, click **"Visit"**.
+You will be asked a series of questions. Answer them like this:
+
+| Prompt | Answer |
+|--------|--------|
+| Please select an option | **Use an existing project** |
+| Select a default Firebase project for this directory | Pick **`users-posts-dashboard`** (the one you just created) |
+| What do you want to use as your public directory? | **`dist`** *(this is where Vite puts the build output)* |
+| Configure as a single-page app (rewrite all URLs to /index.html)? | **Yes** *(critical — without this, `/posts/5` would 404 on refresh)* |
+| Set up automatic builds and deploys with GitHub? | **No** *(we will deploy manually for the capstone; CI can be added later)* |
+| File `dist/index.html` already exists. Overwrite? | **No** *(if asked — keep your built file)* |
+
+Firebase writes two files into your project:
+
+- `firebase.json` — hosting config (commit this)
+- `.firebaserc` — links this folder to your Firebase project (commit this too)
+
+### Step 5 — Build and deploy
+
+```bash
+npm run build
+firebase deploy --only hosting
+```
+
+Firebase will:
+
+1. Upload the contents of `dist/` to its global CDN.
+2. Configure the SPA rewrite so React Router URLs work on refresh.
+3. Give you a public URL like `https://users-posts-dashboard.web.app`.
+
+The whole deploy takes about 30 seconds. Open the URL in your browser — your app is live.
 
 ### Step 6 — Test on the live URL
 
 - Open the URL on your phone over mobile data.
 - Sign in, create a post, switch theme, share the URL with a classmate.
-- Make a small change to your code, `git push` — Vercel automatically redeploys on every push to `main`. Watch the new deployment go live in the Vercel dashboard.
+- Make a small change to your code:
+  ```bash
+  git add . && git commit -m "Tweak hero text"
+  git push
+  npm run build
+  firebase deploy --only hosting
+  ```
+  Firebase only redeploys what changed.
+
+> **Want auto-deploy on every push to `main`?** Re-run `firebase init hosting` and answer **Yes** to *"Set up automatic builds and deploys with GitHub?"* — Firebase will write a GitHub Actions workflow for you. We skip this in class to keep the deploy story simple, but it is a great stretch goal.
+
+### A note on environment variables
+
+This capstone uses JSONPlaceholder, which is public, so **no environment variables are required**. For future projects, remember:
+
+- All Vite env vars must start with `VITE_` to be readable in the browser.
+- Example: `VITE_API_URL=https://my-backend.example.com`
+- Read in code with `import.meta.env.VITE_API_URL`.
+- Set them locally in `.env.local` (which is in `.gitignore`).
+- For Firebase Hosting, env vars are **baked in at build time** — set them in the shell *before* running `npm run build`.
 
 ### Custom domain (optional, skip in class)
 
-If you own a domain, Vercel can attach it for free with automatic HTTPS — **Settings → Domains → Add**. Full guide: [vercel.com/docs/projects/domains](https://vercel.com/docs/projects/domains).
+If you own a domain, Firebase Hosting can attach it for free with automatic HTTPS — **Hosting → Add custom domain** in the Firebase console. Full guide: [firebase.google.com/docs/hosting/custom-domain](https://firebase.google.com/docs/hosting/custom-domain).
 
 ### Common deployment issues
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| **Build fails on TypeScript errors** | Code has TS errors that `dev` was tolerating | Run `npx tsc --noEmit` locally and fix every error before pushing |
-| **404 on refresh on `/posts/5`** | Vite SPA needs a fallback to `index.html` | The Vite preset handles this — confirm Framework Preset is "Vite" |
+| **Build fails on TypeScript errors** | Code has TS errors that `dev` was tolerating | Run `npx tsc --noEmit` locally and fix every error before deploying |
+| **404 on refresh on `/posts/5`** | The SPA rewrite was set to "No" during `firebase init` | Edit `firebase.json` — make sure `"rewrites": [{ "source": "**", "destination": "/index.html" }]` is in the `hosting` block |
 | **Blank page in production only** | Wrong asset paths from a custom `base` in `vite.config.ts` | Leave `base` as default unless deploying to a sub-path |
-| **API calls fail with CORS** | A custom API that does not allow the Vercel origin | Add your `.vercel.app` URL to the API's CORS allow-list (not relevant for JSONPlaceholder) |
+| **`Error: Not in a Firebase app directory`** | You ran `firebase deploy` from the wrong folder | `cd` into the folder that contains `firebase.json` |
+| **API calls fail with CORS** | A custom API that does not allow the Firebase Hosting origin | Add your `.web.app` URL to the API's CORS allow-list (not relevant for JSONPlaceholder) |
 
 ---
 
@@ -528,7 +570,7 @@ You don't need them all. You need to know they exist and to pick the next one ba
 4. **Show post counts per user** on the users table by calling `/users/:id/posts` for each visible row (or a single `/posts` call and grouping client-side — which is faster?).
 5. **Polish the home page** into something you would actually show off — hero, feature cards, a screenshot of the dashboard.
 6. **Replace JSONPlaceholder with DummyJSON** for richer user data (images, gender, age) and update the table columns accordingly.
-7. **Deploy a second branch as a preview** — push a `feature/users-filter` branch, open the Vercel dashboard and visit the preview URL. This is how real teams ship features.
+7. **Deploy a preview channel** — Firebase Hosting supports preview URLs out of the box. Run `firebase hosting:channel:deploy preview-users-filter` after building, and Firebase will give you a temporary public URL for that channel. This is how real teams ship features for review before promoting to production.
 
 ---
 
@@ -537,7 +579,7 @@ You don't need them all. You need to know they exist and to pick the next one ba
 - **TanStack Table + URL-synced state** is the production pattern for any admin list.
 - **Skeletons, error retry and empty states** are the difference between a demo and a product.
 - **`npm run build`** produces an optimised, minified `dist/` folder ready for any static host.
-- **Vercel + GitHub** gives you continuous deployment for free — every push to `main` ships to the live site.
+- **Firebase Hosting** gives you a free `.web.app` URL with global CDN and HTTPS. With the GitHub Actions option enabled, every push to `main` can ship to the live site automatically.
 - **Environment variables in Vite must start with `VITE_`** to be readable in the browser.
 - **The mock-auth + localStorage pattern** is enough for portfolios; real apps need a real auth server (next course).
 
@@ -558,7 +600,7 @@ Look at what you can now do:
 - Fetch, cache and mutate server data with Axios and React Query
 - Build admin tables with pagination, search and filters using TanStack Table
 - Route multi-page apps with React Router v6
-- Build and deploy a production application to Vercel
+- Build and deploy a production application to Firebase Hosting
 
 You started this course as a complete beginner. You are leaving it as a **junior front-end developer** with a live portfolio piece on the internet.
 
@@ -567,7 +609,7 @@ A few last words from me:
 - **Keep building.** Pick a small idea this week — a workout tracker, a movie watchlist, a college canteen menu app — and build it. The course gave you the tools; building real things turns them into instincts.
 - **Read other people's code.** Clone open-source React projects on GitHub. Don't try to understand everything — pick one file and figure out what it does.
 - **Ask better questions.** When you get stuck, write down what you tried and what error you got. Half the time the answer reveals itself in the writing.
-- **Ship publicly.** Put your projects on Vercel. Share the URL. Feedback from real users teaches more than any tutorial.
+- **Ship publicly.** Put your projects on Firebase Hosting. Share the URL. Feedback from real users teaches more than any tutorial.
 
 It has been a privilege to teach you. Now go and build something the world has not seen yet.
 

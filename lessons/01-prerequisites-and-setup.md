@@ -5,9 +5,10 @@
 
 ## What You Will Learn
 - Why we spend the very first class on tools (and not on code)
-- How to install **Node.js**, **VS Code**, and **Git** on macOS and Windows
+- How to install **Node.js**, **VS Code**, **Git** (+ **Git Bash** on Windows), and the **GitHub CLI (`gh`)** on macOS and Windows
 - How to configure Git so your work is credited to you
-- How to create the **GitHub** and **Vercel** accounts we will use all semester
+- How to create your **GitHub** account and **authenticate the CLI** with `gh auth login`
+- How to create your **Firebase** (Google) account — we will deploy to Firebase Hosting in Class 51
 - Which **VS Code extensions** to install for HTML, CSS, JS, and React
 - A quick tour of **VS Code**, **browser DevTools**, and the **Live Server** extension
 
@@ -24,7 +25,8 @@ A developer's kitchen has four core appliances:
 | **Node.js** | Runs JavaScript outside the browser; powers our build tools | The cooker — gives energy to everything |
 | **VS Code** | Where we write code | The kitchen worktop — clean, well-lit, organised |
 | **Git** | Tracks every change you make to your code | The recipe book that remembers every edit |
-| **GitHub + Vercel** | Stores your code online and puts your website on the internet | The shop window that displays your work |
+| **GitHub + `gh` CLI** | Stores your code online and lets us drive it from the terminal | The recipe-book library + a quick way to put new books on the shelf |
+| **Firebase** | Puts your finished website on the internet on a free public URL | The shop window that displays your work |
 
 Once these are in place, every future class can focus on the *cooking* — writing actual code — instead of fighting with setup.
 
@@ -178,7 +180,9 @@ Now every time you press save, Prettier tidies your code for you.
   git --version
   ```
   If Git is missing, macOS will pop up a dialog offering to install the **Command Line Developer Tools**. Click **Install** and wait a few minutes.
-- **Windows**: go to **https://git-scm.com/download/win**, download the installer, and run it. Accept all the default options — they are fine.
+- **Windows**: go to **https://git-scm.com/download/win**, download the installer, and run it. Accept all the default options — they are fine. The installer **also gives you "Git Bash"**, a small Unix-style terminal that ships alongside Git. **Throughout this course Windows users should use Git Bash** (not PowerShell or CMD) — every command in our lessons works the same way as on macOS that way. Find it in the Start Menu after install.
+
+> **Windows shell convention for the rest of the course**: when a lesson says "open a terminal", Windows students open **Git Bash**. macOS students open **Terminal**. They behave the same way for everything we do.
 
 ### Step 2 — Verify
 
@@ -228,19 +232,78 @@ You do not need a paid plan. The free tier is more than enough for this entire c
 
 ---
 
-## 1.9 Create a Vercel Account
+## 1.9 Install the GitHub CLI (`gh`) and Sign In
 
-**Vercel** is a hosting service that puts your website on the internet for free. We will deploy our final React project there in Class 51.
+The **GitHub CLI** (`gh`) lets us create and manage GitHub repositories straight from the terminal — much faster than clicking through the website. We will use it from Class 27 onwards.
 
-1. Go to **https://vercel.com** and click **Sign up**.
-2. Click **Continue with GitHub** — this links the two accounts so deployments happen automatically later.
-3. Authorise Vercel when GitHub asks.
+### Step 1 — Install
 
-That is all — we will not deploy anything today, but the account is now ready when we need it.
+- **macOS** (recommended, via Homebrew):
+  ```bash
+  brew install gh
+  ```
+  If Homebrew is not installed, follow [brew.sh](https://brew.sh) first (one command, then re-open the terminal).
+- **macOS** (without Homebrew): download the `.pkg` from **https://cli.github.com/** and run the installer.
+- **Windows** (via Winget — built into Windows 10/11):
+  ```bash
+  winget install --id GitHub.cli
+  ```
+  If Winget is missing, download the `.msi` installer from **https://cli.github.com/** instead. After installing, **close and re-open Git Bash** so the new `gh` command is picked up.
+
+### Step 2 — Verify
+
+```bash
+gh --version
+```
+
+You should see something like `gh version 2.83.1 (...)`.
+
+### Step 3 — Sign in to GitHub from the terminal
+
+Run:
+
+```bash
+gh auth login
+```
+
+You will be asked a short series of questions. The recommended answers are:
+
+| Prompt | Answer |
+|--------|--------|
+| Where do you use GitHub? | **GitHub.com** |
+| Preferred protocol for Git operations? | **HTTPS** |
+| Authenticate Git with your GitHub credentials? | **Yes** |
+| How would you like to authenticate? | **Login with a web browser** |
+
+`gh` will display a one-time code, for example `ABCD-1234`, and open **https://github.com/login/device** in your browser. Paste the code, sign in to GitHub if asked, and authorise the device. Back in the terminal you should see:
+
+```
+✓ Logged in as your-username
+```
+
+Verify it any time with:
+
+```bash
+gh auth status
+```
+
+From now on, both `git push` and `gh repo create` will work without ever asking for a password.
 
 ---
 
-## 1.10 Your First HTML File with Live Server
+## 1.10 Create a Firebase Account
+
+**Firebase** is Google's hosting service that puts your website on the internet on a free public URL. We will deploy our final React project there in Class 51.
+
+1. Go to **https://console.firebase.google.com** and click **Get started** (or **Go to console**).
+2. Sign in with your **Google account**. If you do not have one, create one — it is free and you will use the same account for Gmail, YouTube, etc.
+3. Once you land on the Firebase console, you are done. There is no need to create a project today — we will do that together in Class 51.
+
+> The **Firebase CLI** (the tool that actually deploys code) will be installed in Class 51 when we need it. Today is only about creating the account.
+
+---
+
+## 1.11 Your First HTML File with Live Server
 
 Time to actually use what we installed.
 
@@ -288,7 +351,7 @@ Your default browser opens at an address such as `http://127.0.0.1:5500/index.ht
 
 ---
 
-## 1.11 Browser DevTools — A 5-Minute Tour
+## 1.12 Browser DevTools — A 5-Minute Tour
 
 Every modern browser ships with **DevTools** — a built-in inspector that lets you look inside any web page.
 
@@ -317,17 +380,19 @@ These changes are temporary (refresh the page and they disappear), but they are 
 ## Practice Exercises
 
 ### Exercise 1 — Verify your install (10 minutes)
-Run all four commands and write the version numbers in a notes file:
+Run all six commands and write the version numbers in a notes file:
 
 ```bash
 node -v
 npm -v
 git --version
 code -v
+gh --version
+gh auth status
 ```
 
 ### Exercise 2 — Your "Hello, world" page (10 minutes)
-Create a folder called `hello-world`, add an `index.html` file with the boilerplate from Section 1.10, and open it with Live Server. Edit the heading to greet you by name, then save and watch the page reload.
+Create a folder called `hello-world`, add an `index.html` file with the boilerplate from Section 1.11, and open it with Live Server. Edit the heading to greet you by name, then save and watch the page reload.
 
 ### Exercise 3 — DevTools experiment (5 minutes)
 Open DevTools on your page, change the heading text from the Elements tab, then refresh the page. Confirm that the change disappears — DevTools edits are *temporary*.
@@ -336,7 +401,8 @@ Open DevTools on your page, change the heading text from the Elements tab, then 
 
 ## Key Takeaways
 - A fully set-up environment is the foundation for the rest of the course — never skip it.
-- **Node.js LTS**, **VS Code**, **Git**, **GitHub**, and **Vercel** are the five core pieces.
+- The six core pieces are **Node.js LTS**, **VS Code**, **Git** (+ **Git Bash** on Windows), the **GitHub CLI (`gh`)**, a **GitHub account**, and a **Firebase (Google) account**.
+- After `gh auth login`, the terminal can push to GitHub and create repos with **zero passwords**.
 - VS Code extensions and Prettier-on-save make daily work much easier.
 - **Live Server** auto-reloads your page in the browser whenever you save — your new best friend.
 - **DevTools** lets you peek inside any web page and experiment safely.

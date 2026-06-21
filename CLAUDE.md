@@ -25,7 +25,7 @@ Teach BCA second-semester students to build modern, production-style React appli
 - **Toasts**: Sonner (via shadcn)
 - **Package Manager**: npm
 - **Version Control**: Git + GitHub
-- **Deployment**: Vercel
+- **Deployment**: Firebase Hosting
 - **Placeholder APIs**: JSONPlaceholder, DummyJSON
 
 ## Project Structure

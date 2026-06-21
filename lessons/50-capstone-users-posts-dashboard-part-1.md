@@ -7,7 +7,7 @@ This is the moment. Over the next two classes you will combine **every single to
 
 ## What You Will Build
 
-A small admin dashboard called **Users & Posts** that talks to the public JSONPlaceholder API. By the end of Class 51 it will be deployed to Vercel with a real `.vercel.app` URL you can share.
+A small admin dashboard called **Users & Posts** that talks to the public JSONPlaceholder API. By the end of Class 51 it will be deployed to **Firebase Hosting** with a real `.web.app` URL you can share.
 
 - App shell with a navbar, theme toggle and a mock user menu
 - A mock login screen (RHF + Zod, stores a fake token in localStorage)
@@ -15,7 +15,7 @@ A small admin dashboard called **Users & Posts** that talks to the public JSONPl
 - A **Users** module: list page, detail page (we replace the list with a TanStack Table in Class 51)
 - Loading skeletons, error UI, success toasts
 - Dark mode that persists across reloads
-- Deployed live to Vercel and pushed to GitHub
+- Deployed live to Firebase Hosting and pushed to GitHub
 
 We will not invent a single new pattern in these two classes. Everything you write today, you have already done in an earlier class.
 

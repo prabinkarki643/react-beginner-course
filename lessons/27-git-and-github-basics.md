@@ -244,18 +244,48 @@ git branch -d feature/coloured-output
 
 ## 27.9 Pushing to GitHub
 
-Now we take this local repository and push it to the cloud. You should already have a GitHub account from Class 1.
+Now we take this local repository and push it to the cloud. You already have a GitHub account from Class 1 and you should already be signed in with the GitHub CLI (`gh auth status` should say *Logged in as …*). There are **two ways** to push to GitHub — we will teach the modern, recommended one first.
 
-### Step 1 — create an empty repo on GitHub
+### Path A (recommended) — one command with the GitHub CLI
+
+From the project folder, run:
+
+```bash
+gh repo create greeter-app --public --source . --remote origin --push
+```
+
+What just happened?
+
+| Flag | Meaning |
+|------|---------|
+| `greeter-app` | The name the new repo will have on GitHub |
+| `--public` | Make it public. Use `--private` if you would rather keep it to yourself. |
+| `--source .` | "Use the current folder as the local source" |
+| `--remote origin` | "Add the new GitHub URL as the remote called `origin`" |
+| `--push` | "And push the current branch to it right now" |
+
+You will see something like:
+
+```
+✓ Created repository yourname/greeter-app on GitHub
+✓ Added remote https://github.com/yourname/greeter-app.git
+✓ Pushed commits to https://github.com/yourname/greeter-app.git
+```
+
+Open the URL in your browser — your files are live on GitHub. That is it.
+
+> **No password prompt?** Correct. Because you ran `gh auth login` in Class 1, both `gh` and `git push` already know how to talk to GitHub on your behalf.
+
+### Path B (traditional) — click first, then push
+
+This is the older flow you will still see in tutorials. It is good to know in case `gh` is not installed on a machine.
 
 1. Go to [github.com](https://github.com), click **New repository**.
 2. Name it `greeter-app`.
 3. **Do not** tick "Add a README" or any other initialiser — we already have a local project.
 4. Click **Create repository**.
 
-### Step 2 — connect your local repo to GitHub
-
-GitHub will show two URLs (HTTPS and SSH). Copy the **HTTPS** one — it looks like `https://github.com/yourname/greeter-app.git`.
+GitHub will then show you two URLs (HTTPS and SSH). Copy the **HTTPS** one — it looks like `https://github.com/yourname/greeter-app.git`. Then in the terminal:
 
 ```bash
 # Tell Git where "origin" lives

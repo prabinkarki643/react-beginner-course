@@ -12,9 +12,11 @@ A practical, per-class checklist for the **51-class React Beginner Course**. Eac
 - [ ] What "full setup" means and why we do it on Day 1
 - [ ] Install **Node.js LTS** — verify with `node -v` and `npm -v`
 - [ ] Install **VS Code** and tour the UI
-- [ ] Install **Git** — verify with `git --version`
+- [ ] Install **Git** — verify with `git --version` (Windows: also installs **Git Bash** — use this for all course commands)
 - [ ] Configure Git: `git config --global user.name` / `user.email`
-- [ ] Create accounts: **GitHub**, **Vercel** (via GitHub)
+- [ ] Install the **GitHub CLI (`gh`)** — `brew install gh` / `winget install GitHub.cli`
+- [ ] Create a **GitHub** account and run `gh auth login` to sign in from the terminal
+- [ ] Create a **Firebase / Google** account at console.firebase.google.com (for the deployment in Class 51)
 - [ ] Install required VS Code extensions (ES7+ React snippets, Tailwind IntelliSense, Prettier, ESLint, Auto Rename Tag, Path Intellisense, Live Server, GitLens, Material Icon Theme)
 - [ ] Open a folder and create your first `.html` file using Live Server
 - [ ] Browser DevTools quick tour (Elements, Console)
@@ -458,16 +460,18 @@ A practical, per-class checklist for the **51-class React Beginner Course**. Eac
 - [ ] Wire `useQuery` / `useMutation`, query keys factory, Sonner toasts
 - **Exercise**: Reach a runnable state by end of class — anything unfinished becomes homework
 
-### Class 51 · Capstone Part 2 — Polish & Vercel Deploy → `51-capstone-part-2-and-deployment.md`
+### Class 51 · Capstone Part 2 — Polish & Firebase Deploy → `51-capstone-part-2-and-deployment.md`
 - [ ] Add a `<UsersTable>` view using TanStack Table (URL-synced pagination + search)
 - [ ] Loading skeletons, error retry buttons, empty states
 - [ ] Form polish (disabled-while-submitting, reset on success)
 - [ ] `npm run build` and a local production preview
-- [ ] Push project to GitHub
-- [ ] Connect the repo to Vercel and deploy
-- [ ] Environment variables in Vercel (intro only — none required for JSONPlaceholder)
+- [ ] Push project to GitHub using `gh repo create`
+- [ ] Install Firebase CLI (`npm i -g firebase-tools`) and `firebase login`
+- [ ] Create a Firebase project in the console and run `firebase init hosting` (public dir `dist`, SPA = Yes)
+- [ ] `firebase deploy --only hosting` → live `.web.app` URL
+- [ ] Environment variables note (intro only — none required for JSONPlaceholder; for future projects `VITE_*` baked in at build time)
 - [ ] What's next: real back-end, auth, tests, animations
-- **Exercise**: Submit the live Vercel URL and the GitHub repo
+- **Exercise**: Submit the live `.web.app` URL and the GitHub repo
 
 ---
 
@@ -475,7 +479,7 @@ A practical, per-class checklist for the **51-class React Beginner Course**. Eac
 
 | Class | Key technology |
 |------:|----------------|
-| 1 | Node.js, VS Code, Git, GitHub, Vercel accounts |
+| 1 | Node.js, VS Code, Git (+ Git Bash), GitHub CLI (`gh`), GitHub & Firebase accounts |
 | 2–7 | HTML5 |
 | 8–15 | CSS3, Flexbox, Grid, media queries |
 | 16–25 | JavaScript ES6+, DOM, Fetch |
@@ -489,7 +493,7 @@ A practical, per-class checklist for the **51-class React Beginner Course**. Eac
 | 45–47 | Axios + TanStack Query + Sonner + JSONPlaceholder |
 | 48 | React Router v6 |
 | 49 | TanStack Table |
-| 50–51 | Everything combined + Vercel deployment |
+| 50–51 | Everything combined + Firebase Hosting deployment |
 
 ---
 

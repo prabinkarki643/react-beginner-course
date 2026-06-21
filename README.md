@@ -27,11 +27,11 @@ By the end of this course, every student will be able to:
 7. Fetch and mutate data with **Axios + React Query (TanStack Query)**
 8. Display data in admin-style tables with **TanStack Table**
 9. Navigate multi-page apps with **React Router v6**
-10. Deploy the finished app live on **Vercel**
+10. Deploy the finished app live on **Firebase Hosting**
 
 ## The Capstone Project
 
-In the final two classes, students build and deploy a **Users & Posts Dashboard** — a small but production-style app that uses every tool taught in the course. It pulls real data from the **JSONPlaceholder** and **DummyJSON** public APIs and is deployed live to Vercel.
+In the final two classes, students build and deploy a **Users & Posts Dashboard** — a small but production-style app that uses every tool taught in the course. It pulls real data from the **JSONPlaceholder** and **DummyJSON** public APIs and is deployed live to **Firebase Hosting**.
 
 ## Course Structure
 
@@ -48,7 +48,7 @@ In the final two classes, students build and deploy a **Users & Posts Dashboard*
 | 8 — Forms | 43–44 | React Hook Form + Zod | <1 |
 | 9 — Data | 45–47 | Axios + React Query | ~1 |
 | 10 — Routing & Tables | 48–49 | React Router + TanStack Table | <1 |
-| 11 — Capstone | 50–51 | Users & Posts dashboard + Vercel deploy | <1 |
+| 11 — Capstone | 50–51 | Users & Posts dashboard + Firebase deploy | <1 |
 | **Total** | **51 classes** | | **~17 weeks** |
 
 **Schedule**: 3 classes per week, 60 minutes per class. Each lesson file is sized for exactly **one** class.
@@ -68,8 +68,8 @@ In the final two classes, students build and deploy a **Users & Posts Dashboard*
 | **Tables** | TanStack Table |
 | **Routing** | React Router v6 |
 | **Toasts** | Sonner (via shadcn) |
-| **Version Control** | Git + GitHub |
-| **Deployment** | Vercel |
+| **Version Control** | Git + GitHub (via `gh` CLI) |
+| **Deployment** | Firebase Hosting |
 | **APIs (teaching)** | JSONPlaceholder, DummyJSON |
 
 ## Prerequisites — Before Class 1
@@ -79,12 +79,13 @@ Every student must arrive at Class 1 with:
 ### Software installed
 - [ ] **Node.js LTS** (latest LTS) — [nodejs.org](https://nodejs.org)
 - [ ] **VS Code** — [code.visualstudio.com](https://code.visualstudio.com)
-- [ ] **Git** — [git-scm.com](https://git-scm.com)
+- [ ] **Git** — [git-scm.com](https://git-scm.com) (Windows: installer also gives you **Git Bash** — use that for all terminal commands)
+- [ ] **GitHub CLI (`gh`)** — [cli.github.com](https://cli.github.com) (`brew install gh` on macOS, `winget install GitHub.cli` on Windows)
 - [ ] A modern browser — Chrome, Edge, or Firefox
 
 ### Accounts created
-- [ ] **GitHub** — [github.com](https://github.com)
-- [ ] **Vercel** — [vercel.com](https://vercel.com) (sign in with GitHub)
+- [ ] **GitHub** — [github.com](https://github.com), then run `gh auth login` once in the terminal
+- [ ] **Firebase / Google** — [console.firebase.google.com](https://console.firebase.google.com) (sign in with your Google account)
 
 ### VS Code extensions
 - [ ] **ES7+ React/Redux/React-Native snippets** (`dsznajder.es7-react-js-snippets`)

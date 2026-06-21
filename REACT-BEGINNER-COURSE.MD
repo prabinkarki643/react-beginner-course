@@ -2,12 +2,12 @@
 
 ## Course Overview
 
-This **51-class beginner course** takes BCA Semester 2 students from zero web-development knowledge to building and deploying a modern, production-style React application. Students start with the fundamentals — HTML, CSS, JavaScript — then move into modern tooling (Node.js, npm, Git, TypeScript) before learning React 18 with Vite, Tailwind CSS, shadcn/ui, React Hook Form, Zod, Axios, React Query, React Router, and TanStack Table. The course ends with a capstone **Users & Posts Dashboard**, deployed live to Vercel.
+This **51-class beginner course** takes BCA Semester 2 students from zero web-development knowledge to building and deploying a modern, production-style React application. Students start with the fundamentals — HTML, CSS, JavaScript — then move into modern tooling (Node.js, npm, Git, TypeScript) before learning React 18 with Vite, Tailwind CSS, shadcn/ui, React Hook Form, Zod, Axios, React Query, React Router, and TanStack Table. The course ends with a capstone **Users & Posts Dashboard**, deployed live to **Firebase Hosting**.
 
 The course is **frontend-only**. Wherever data fetching is taught, students use public placeholder APIs (**JSONPlaceholder** and **DummyJSON**), so 100% of the focus stays on the React side. Students who want the backend (Express, MongoDB, authentication, payments) can continue with the MERN course afterwards.
 
 **Level**: Absolute beginner — no prior coding experience required.
-**Project**: A **Users & Posts Dashboard** with mock authentication, full CRUD, an admin-style data table, dark-mode theming and Vercel deployment.
+**Project**: A **Users & Posts Dashboard** with mock authentication, full CRUD, an admin-style data table, dark-mode theming and **Firebase Hosting** deployment.
 **Schedule**: 3 classes per week, 1 hour per class (~17 weeks total — one semester).
 
 ---
@@ -42,7 +42,7 @@ The course is **frontend-only**. Wherever data fetching is taught, students use 
 | **Tables** | TanStack Table (`@tanstack/react-table`) | Admin-style data tables with pagination, search, filters |
 | **Toasts** | Sonner (via shadcn) | Success and error notifications |
 | **Version Control** | Git + GitHub | Source control and code hosting |
-| **Deployment** | Vercel | Production hosting (frontend) |
+| **Deployment** | Firebase Hosting (Google) | Production hosting (frontend) with free `.web.app` URL |
 | **Placeholder APIs** | JSONPlaceholder, DummyJSON | Realistic API data for learning |
 
 ---
@@ -57,7 +57,8 @@ Before Class 1, students must install the following software and create the requ
 |----------|---------|---------|-----|
 | **Node.js** (LTS) | 20+ | Download from [nodejs.org](https://nodejs.org) and run the installer | `brew install node` or download from [nodejs.org](https://nodejs.org) |
 | **npm** | 10+ | Included with Node.js | Included with Node.js |
-| **Git** | 2.40+ | Download from [git-scm.com](https://git-scm.com) | `brew install git` or Xcode Command Line Tools (`xcode-select --install`) |
+| **Git** | 2.40+ | Download from [git-scm.com](https://git-scm.com) — the installer also gives you **Git Bash**, the terminal Windows students use for the course | `brew install git` or Xcode Command Line Tools (`xcode-select --install`) |
+| **GitHub CLI (`gh`)** | 2.40+ | `winget install GitHub.cli` (or `.msi` from [cli.github.com](https://cli.github.com)) | `brew install gh` |
 | **VS Code** | Latest | Download from [code.visualstudio.com](https://code.visualstudio.com) | Download from [code.visualstudio.com](https://code.visualstudio.com) |
 | **Modern browser** | Latest | Chrome, Edge, or Firefox | Chrome, Edge, Safari, or Firefox |
 
@@ -79,18 +80,20 @@ Before Class 1, students must install the following software and create the requ
 
 | Service | Purpose | URL |
 |---------|---------|-----|
-| **GitHub** | Code hosting and version control | [github.com](https://github.com) |
-| **Vercel** | Frontend deployment (free tier — sign in with GitHub) | [vercel.com](https://vercel.com) |
+| **GitHub** | Code hosting and version control. After signing up, run `gh auth login` once in the terminal to authenticate the CLI. | [github.com](https://github.com) |
+| **Firebase (Google)** | Free hosting for the capstone (`.web.app` URL with HTTPS) — sign in with your Google account. | [console.firebase.google.com](https://console.firebase.google.com) |
 
 ### Verify Installation
 
-After installing, open a terminal and run these commands to verify:
+After installing, open a terminal (**Git Bash** on Windows, **Terminal** on macOS) and run these commands:
 
 ```bash
 node --version      # Should show v20.x.x or higher
 npm --version       # Should show 10.x.x or higher
 git --version       # Should show 2.40.x or higher
-code --version      # Should show a VS Code version (Mac/Windows shells)
+gh --version        # Should show 2.x.x or higher
+gh auth status      # Should say "Logged in as <your-username>"
+code --version      # Should show a VS Code version
 ```
 
 ---
@@ -107,7 +110,7 @@ The 51 classes are grouped into **12 phases**. Every lesson file is sized for ex
 
 | Class | Topic | Key Concepts |
 |-------|-------|-------------|
-| 01 | Prerequisites & Environment Setup | Node.js LTS, VS Code + extensions, Git first-time config, GitHub & Vercel accounts, VS Code tour, browser DevTools, Live Server |
+| 01 | Prerequisites & Environment Setup | Node.js LTS, VS Code + extensions, Git first-time config (+ Git Bash on Windows), GitHub CLI install + `gh auth login`, GitHub & Firebase accounts, VS Code tour, browser DevTools, Live Server |
 
 **Outcome**: A correctly set-up development environment for every student.
 
@@ -278,9 +281,9 @@ The 51 classes are grouped into **12 phases**. Every lesson file is sized for ex
 | Class | Topic | Key Concepts |
 |-------|-------|-------------|
 | 50 | Capstone Part 1 — Dashboard Build | Project brief, scaffold (Vite + React + TS + Tailwind + shadcn), Axios + React Query, routes wired, mock login (RHF + Zod), Posts module (list, detail, create), Sonner toasts |
-| 51 | Capstone Part 2 — Polish & Vercel Deployment | `<UsersTable>` (TanStack Table), skeletons, error retry, empty states, form polish, `npm run build`, push to GitHub, deploy to Vercel, custom domain |
+| 51 | Capstone Part 2 — Polish & Firebase Deployment | `<UsersTable>` (TanStack Table), skeletons, error retry, empty states, form polish, `npm run build`, push to GitHub via `gh repo create`, `firebase login`, `firebase init hosting` (SPA), `firebase deploy --only hosting`, custom domain |
 
-**Outcome**: A live application on a public Vercel URL, in the student's own GitHub repository — ready for a CV or portfolio.
+**Outcome**: A live application on a public Firebase Hosting URL (`.web.app`), in the student's own GitHub repository — ready for a CV or portfolio.
 
 ---
 
@@ -288,7 +291,7 @@ The 51 classes are grouped into **12 phases**. Every lesson file is sized for ex
 
 | Class | Key Concepts | Tools & Libraries |
 |-------|-------------|-------------------|
-| 01 | Environment setup, accounts, DevTools | Node.js, VS Code, Git, GitHub, Vercel |
+| 01 | Environment setup, accounts, DevTools | Node.js, VS Code, Git (+ Git Bash), GitHub CLI (`gh`), GitHub, Firebase |
 | 02–07 | HTML structure, semantic markup, forms, accessibility | HTML5, Live Server |
 | 08–15 | Selectors, box model, Flexbox, Grid, responsive design | CSS3 |
 | 16–25 | ES6+ syntax, DOM, events, modules, async, Fetch | JavaScript, JSONPlaceholder |
@@ -312,7 +315,7 @@ The 51 classes are grouped into **12 phases**. Every lesson file is sized for ex
 | 48 | Client-side routing, nested layouts | React Router v6 |
 | 49 | Headless table, URL state, debounced search, pagination | TanStack Table, React Router |
 | 50 | App architecture, feature folders, mock auth | Everything above |
-| 51 | Production build, GitHub push, Vercel deployment | Vercel |
+| 51 | Production build, GitHub push, Firebase Hosting deployment | Firebase CLI |
 
 ---
 
@@ -346,7 +349,7 @@ A small but production-style admin dashboard featuring:
 - **Dark mode toggle** that remembers the user's choice across sessions
 - **Loading skeletons**, **error UI with retry**, and **empty states** everywhere
 - **Production build** with `npm run build` and a local preview
-- **Live deployment** on Vercel, in the student's own GitHub repository
+- **Live deployment** on Firebase Hosting (a free `.web.app` URL), in the student's own GitHub repository
 
 ---
 
@@ -398,7 +401,7 @@ By the end of the 51 classes, every student will:
 6. Fetch, cache, and mutate data with Axios + React Query.
 7. Build admin-style data tables with TanStack Table.
 8. Navigate multi-page apps with React Router v6.
-9. Deploy a real, working application to Vercel from a GitHub repository.
+9. Deploy a real, working application to Firebase Hosting from a GitHub repository.
 10. Have a **public, live URL** they can put on their CV or portfolio.
 
 > "If you can finish this course, you can apply for a junior front-end React role." — Er. Prabin Karki
